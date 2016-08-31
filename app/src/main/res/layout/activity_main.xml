@@ -26,6 +26,34 @@
 
     </FrameLayout>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/custom_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="32dp"
+            android:text="_"
+            />
+
+        <TextView
+            android:id="@+id/custom_city_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:textSize="32dp"
+            android:text="0 °C"
+            />
+
+    </FrameLayout>
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,32 +144,6 @@
 
         <TextView
             android:id="@+id/sydney_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-
-            android:textSize="32dp"
-            android:text="0 °C"
-            />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp">
-
-        <TextView
-            android:id="@+id/custom_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:textSize="32dp"
-            android:text="_"
-            />
-
-        <TextView
-            android:id="@+id/custom_city_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

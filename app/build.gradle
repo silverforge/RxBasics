@@ -6,11 +6,12 @@ android {
 
     defaultConfig {
         applicationId "xyz.sevil.rx.rxbasics"
-        minSdkVersion 19
+        minSdkVersion 22
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         jackOptions.enabled = true
+        multiDexEnabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
