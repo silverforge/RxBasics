@@ -106,25 +106,40 @@ public class MainActivity extends AppCompatActivity {
                     StringBuilder sb = new StringBuilder(charSequence.length());
                     return sb.append(charSequence).toString();
                 })
+//                .debounce(2, TimeUnit.SECONDS)
+//                .distinctUntilChanged()
                 .subscribe(enteredText -> {
+                    // onNext
+
                     Log.d("TAG", enteredText);
 
                     customCityName.setText(enteredText);
 
                     Observable.fromCallable(() -> repository.getCityWeather(enteredText))
-                            .distinctUntilChanged()
-                            .throttleWithTimeout(2, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(weatherInfo -> {
+                                // onNext
+
                                 Log.d("TAG", "service call");
 
                                 if (weatherInfo != null && weatherInfo.getMain() != null && weatherInfo.getMain().getTemp() != null) {
                                     Double temp = weatherInfo.getMain().getTemp();
                                     customCityTemp.setText(String.valueOf(temp) + " °C");
                                 }
-                            });
-                });
+                            }, throwable -> {
+                                // onError
 
+                            }, () -> {
+                                // onCompleted
+
+                            });
+                }, throwable -> {
+                    // onError
+
+                }, () -> {
+                    // onCompleted
+
+                });
     }
 }
