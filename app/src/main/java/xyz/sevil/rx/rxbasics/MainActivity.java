@@ -124,14 +124,14 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         RxTextView.textChanges(citySearch)
+            .sample(2, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
                 .map(charSequence -> {
                     Log.d("TAG", charSequence.toString());
 
                     StringBuilder sb = new StringBuilder(charSequence.length());
                     return sb.append(charSequence).toString();
                 })
-//                .debounce(2, TimeUnit.SECONDS)
-//                .distinctUntilChanged()
                 .subscribe(enteredText -> {
                     // onNext
 
