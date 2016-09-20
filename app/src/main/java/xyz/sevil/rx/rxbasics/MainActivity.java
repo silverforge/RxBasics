@@ -126,45 +126,45 @@ public class MainActivity extends AppCompatActivity {
         RxTextView.textChanges(citySearch)
             .sample(2, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-                .map(charSequence -> {
-                    Log.d("TAG", charSequence.toString());
+            .map(charSequence -> {
+                Log.d("TAG", charSequence.toString());
 
-                    StringBuilder sb = new StringBuilder(charSequence.length());
-                    return sb.append(charSequence).toString();
-                })
-                .subscribe(enteredText -> {
-                    // onNext
+                StringBuilder sb = new StringBuilder(charSequence.length());
+                return sb.append(charSequence).toString();
+            })
+            .subscribe(enteredText -> {
+                // onNext
 
-                    Log.d("TAG", enteredText);
+                Log.d("TAG", enteredText);
 
-                    customCityName.setText(enteredText);
+                customCityName.setText(enteredText);
 
-                    Observable.fromCallable(() -> repository.getCityWeather(enteredText))
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(weatherInfo -> {
-                                // onNext
+                Observable.fromCallable(() -> repository.getCityWeather(enteredText))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(weatherInfo -> {
+                        // onNext
 
-                                Log.d("TAG", "service call");
+                        Log.d("TAG", "service call");
 
-                                if (weatherInfo != null && weatherInfo.getMain() != null && weatherInfo.getMain().getTemp() != null) {
-                                    Double temp = weatherInfo.getMain().getTemp();
-                                    customCityTemp.setText(String.valueOf(temp) + " °C");
-                                }
-                            }, throwable -> {
-                                // onError
+                        if (weatherInfo != null && weatherInfo.getMain() != null && weatherInfo.getMain().getTemp() != null) {
+                            Double temp = weatherInfo.getMain().getTemp();
+                            customCityTemp.setText(String.valueOf(temp) + " °C");
+                        }
+                    }, throwable -> {
+                        // onError
 
-                            }, () -> {
-                                // onCompleted
+                    }, () -> {
+                        // onCompleted
 
-                            });
-                }, throwable -> {
-                    // onError
+                    });
+            }, throwable -> {
+                // onError
 
-                }, () -> {
-                    // onCompleted
+            }, () -> {
+                // onCompleted
 
-                });
+            });
     }
 
     private void logToConsole(Integer integer) {
