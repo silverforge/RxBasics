@@ -12,7 +12,7 @@ import xyz.sevil.rx.rxbasics.model.WeatherInfo;
 
 public class WeatherRepository {
 
-    OpenWeatherAPI openWeatherAPI;
+    private OpenWeatherAPI openWeatherAPI;
 
     public WeatherRepository() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -36,14 +36,15 @@ public class WeatherRepository {
     }
 
     public WeatherInfo getCityWeather(String cityname) {
-        Call<WeatherInfo> weatherOfCity = openWeatherAPI.getWeatherOfCity(cityname);
+        WeatherInfo retValue = new WeatherInfo();
 
         try {
-            return weatherOfCity.execute().body();
+            Call<WeatherInfo> weatherOfCity = openWeatherAPI.getWeatherOfCity(cityname);
+            retValue = weatherOfCity.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new WeatherInfo();
+        return retValue;
     }
 }

@@ -7,6 +7,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AndroidThreeTen.init(this);
 
         citySearch = (EditText) findViewById(R.id.city_search);
 
@@ -42,19 +47,38 @@ public class MainActivity extends AppCompatActivity {
         customCityName = (TextView) findViewById(R.id.custom_city_name);
         customCityTemp = (TextView) findViewById(R.id.custom_city_temp);
 
+
+//        Observable.range(1, 10)
+//            .subscribe(item -> {
+//                // onNext
+//                Log.d("MY_SEQUENCE", String.format("Next item is %s", item));
+//            },
+//            throwable -> {
+//                // onError
+//                Log.d("MY_SEQUENCE", throwable.getMessage());
+//            },
+//            () -> {
+//                // onCompleted
+//                Log.d("MY_SEQUENCE", "Completed");
+//            });
+
+
 //        londonTemp.setText("12 °C");
 //        stockholmTemp.setText("15 °C");
 //        budapestTemp.setText("26 °C");
 //        sydneyTemp.setText("30 °C");
 
-//
-//        Observable.range(1, 20)
-//                .delay(5, TimeUnit.SECONDS)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(integer -> {
-//                    stockholmTemp.setText(String.valueOf(integer));
-//                });
+
+//        Observable.range(17, 5)
+//            .zipWith(Observable.interval(5, TimeUnit.SECONDS), (integer, aLong) -> {return integer;})
+//            .subscribeOn(Schedulers.newThread())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(integer -> {
+//                logToConsole(integer);
+//                stockholmTemp.setText(String.valueOf(integer) + " °C");
+//            },
+//            throwable -> {},
+//            () -> Log.d("TEMPERATURE", "Completed"));
 
         WeatherRepository repository = new WeatherRepository();
 
@@ -141,5 +165,13 @@ public class MainActivity extends AppCompatActivity {
                     // onCompleted
 
                 });
+    }
+
+    private void logToConsole(Integer integer) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String dateTime = now.format(dateTimeFormatter);
+
+        Log.d("TEMPERATURE", String.format("Next item is %s at %s", integer, dateTime));
     }
 }
